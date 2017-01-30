@@ -1,52 +1,56 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>The Shooter</title>
-        <style>
-        /*Made by Syed Sharaf*/
-body {
-    background-image:url(" http://wallpapercave.com/wp/KdgcJG4.jpg ");
-    background-size:350%;
-    background-position:center;
-    font-family:Times;
-    font-color:"#CEF6F5";
-}
-#target
+var hits = 0;
+var missed = 0; 
+
+function Shoot()
 {
-   top:49px;
-   width:60px;
-   position:absolute;
-   animation-name:movetarget;
-   animation-duration:3s;
-   animation-iteration-count:infinite;
-   animation-direction:alternate;
-   -webkit-animation-duration:3s;
-   -webkit-animation-name:movetarget;
-   -webkit-animation-iteration-count:infinite;
-   -webkit-animation-direction:alternate;
-}
-#me
+   var bullet = document.getElementById("bullet");
+   bullet.offsetTop=330;
+   var target = document.getElementById("target");
+   bullet.style.display="inherit";
+   var bPos = 331;
+   var t = setInterval(moveBullet,1);
+   
+   function moveBullet()
+   {
+     if(bPos < 30)
+     {
+      clearInterval(t);
+      bullet.style.display="none";
+      missed++;
+     }
+     else
+     {
+      var sameX = (bullet.offsetTop>=36) && (bullet.offsetTop <= 70);
+      var sameY = (target.offsetLeft >=90)&&(target.offsetLeft <=150);
+       if(!(sameX && sameY))
+       {
+        bPos -= 4;
+        bullet.style.top = bPos +"px";
+        var yb = bPos + "px";         
+       }
+       else
+       {
+         clearInterval(t);
+         bullet.style.display="none";
+         hits++; document.getElementById("explode").style.visibility="inherit";
+         setTimeout(function(){ document.getElementById("explode").style.visibility="hidden"; },800)
+       }   
+      } document.getElementById("hits").innerHTML= "Hits: "+hits;
+      document.getElementById("missed").innerHTML="Missed: "+missed;
+  if (missed==5){
+     if (hits<10){
+        alert ("\t\t\t\t\t\t\tYou Loose \n Hits---------------------------------------"+hits+"\n Missed----------------------------------"+missed+"\n\n \t\t\t\t\t\tDo Hardwork!!!") 
+        hits=0;
+        missed=0;
+     }
+  } 
+  }
+};
+
+function ThankYou()
 {
-width:100px;
-position:absolute;
-top:350px;
-left:100px;
+   alert("Welcome to The Shooter!! I, Syed Sharaf Hope you will enjoy it.");
 }
-#bullet
-{
-   width:50px;
-   position:absolute ;
-   top:330px;
-   left:125px;
-   display:none;
-}
-@keyframes movetarget
-{
-   from{margin-left:0%;} 
-   to{margin-left:80%;}
-}
-@-webkit-keyframes movetarget
-{
  from{margin-left:0%;} 
  to{margin-left:80%;} 
 }
